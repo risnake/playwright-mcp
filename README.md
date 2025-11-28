@@ -406,9 +406,38 @@ state [here](https://playwright.dev/docs/auth).
 }
 ```
 
-**Browser Extension**
+**Browser Extension (Use Your Own Browser)**
 
-The Playwright MCP Chrome Extension allows you to connect to existing browser tabs and leverage your logged-in sessions and browser state. See [extension/README.md](extension/README.md) for installation and setup instructions.
+The Playwright MCP Chrome Extension allows you to connect to your existing browser instead of launching a new one. This is ideal when you want to:
+
+- **Use your existing browser extensions** (ad blockers, password managers, etc.)
+- **Leverage logged-in sessions** without re-authenticating
+- **Keep your browser customizations** (bookmarks, settings, themes)
+- **Work with sites that require specific extensions** or browser configurations
+
+To use this mode:
+
+1. **Install the extension**: Download from [GitHub Releases](https://github.com/microsoft/playwright-mcp/releases) and load it in Chrome/Edge via `chrome://extensions/` (enable Developer mode, click "Load unpacked")
+
+2. **Configure the MCP server** with the `--extension` flag:
+
+```json
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest",
+        "--extension"
+      ]
+    }
+  }
+}
+```
+
+3. **Start using the AI assistant** - When it first tries to interact with the browser, you'll see a page to select which tab to connect to. You can also set up an authentication token to bypass the approval dialog.
+
+See [extension/README.md](extension/README.md) for detailed installation and setup instructions.
 
 ### Initial state
 
