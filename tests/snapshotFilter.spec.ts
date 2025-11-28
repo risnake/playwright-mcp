@@ -16,7 +16,7 @@
 
 import { test, expect } from '@playwright/test';
 
-const { filterSnapshotLine, filterAriaSnapshot, filterMcpResponse } = require('../lib/snapshotFilter');
+const { filterSnapshotLine, filterAriaSnapshot, filterMcpResponse } = require('../src/snapshotFilter');
 
 test.describe('snapshotFilter', () => {
   test.describe('filterSnapshotLine', () => {
