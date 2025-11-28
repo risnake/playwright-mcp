@@ -17,8 +17,8 @@
 import path from 'path';
 import { test, expect } from './fixtures';
 
-const ghostCursorScript = path.join(__dirname, '../lib/ghost-cursor.js');
-const ghostCursorPage = path.join(__dirname, '../lib/ghost-cursor-page.ts');
+const ghostCursorScript = path.join(__dirname, '../scripts/ghost-cursor.js');
+const ghostCursorPage = path.join(__dirname, '../scripts/ghost-cursor-page.ts');
 
 test.describe('Ghost Cursor', () => {
   test('injects ghost cursor element into page', async ({ startClient, server }) => {

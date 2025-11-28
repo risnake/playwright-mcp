@@ -44,8 +44,8 @@ const ghostConfig = {
 // Build arguments
 const args = process.argv.slice(2);
 const cliPath = path.join(__dirname, 'cli.js');
-const ghostCursorScript = path.join(__dirname, 'lib', 'ghost-cursor.js');
-const ghostCursorPage = path.join(__dirname, 'lib', 'ghost-cursor-page.ts');
+const ghostCursorScript = path.join(__dirname, 'scripts', 'ghost-cursor.js');
+const ghostCursorPage = path.join(__dirname, 'scripts', 'ghost-cursor-page.ts');
 
 // Add ghost cursor init scripts if enabled
 if (ghostConfig.enabled) {

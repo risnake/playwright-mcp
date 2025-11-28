@@ -459,8 +459,8 @@ Enable the ghost cursor by adding the init scripts:
       "command": "npx",
       "args": [
         "@playwright/mcp@latest",
-        "--init-script=node_modules/@playwright/mcp/lib/ghost-cursor.js",
-        "--init-page=node_modules/@playwright/mcp/lib/ghost-cursor-page.ts"
+        "--init-script=node_modules/@playwright/mcp/scripts/ghost-cursor.js",
+        "--init-page=node_modules/@playwright/mcp/scripts/ghost-cursor-page.ts"
       ]
     }
   }
