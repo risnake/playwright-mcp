@@ -47,6 +47,8 @@ export class RelayConnection {
   private _tabPromiseResolve!: () => void;
   private _closed = false;
   private _firewallSettings: FirewallSettings | null = null;
+  private _settingsLastLoaded: number = 0;
+  private static readonly SETTINGS_CACHE_TTL_MS = 5000; // Cache settings for 5 seconds
 
   onclose?: () => void;
 
@@ -68,9 +70,17 @@ export class RelayConnection {
   private async _loadFirewallSettings(): Promise<void> {
     try {
       this._firewallSettings = await getSettings();
+      this._settingsLastLoaded = Date.now();
       debugLog('Loaded firewall settings:', this._firewallSettings);
     } catch (error) {
       debugLog('Failed to load firewall settings:', error);
+    }
+  }
+
+  private async _refreshFirewallSettingsIfStale(): Promise<void> {
+    const now = Date.now();
+    if (now - this._settingsLastLoaded > RelayConnection.SETTINGS_CACHE_TTL_MS) {
+      await this._loadFirewallSettings();
     }
   }
 
@@ -183,8 +193,8 @@ export class RelayConnection {
 
       // Check firewall for navigation commands
       if (method === 'Page.navigate' && params?.url) {
-        // Refresh firewall settings for each navigation check
-        await this._loadFirewallSettings();
+        // Refresh firewall settings if cache is stale (avoids storage access on every request)
+        await this._refreshFirewallSettingsIfStale();
         const firewallCheck = this._checkFirewallForNavigation(params.url);
         if (!firewallCheck.allowed) {
           throw new Error(`Navigation blocked by firewall: ${firewallCheck.reason}. Configure allowed hosts in the extension settings.`);

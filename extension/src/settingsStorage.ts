@@ -47,12 +47,13 @@ export interface FirewallSettings {
 
 /**
  * Default settings with firewall disabled and empty host lists.
+ * When firewall is disabled, requireUserApproval is also disabled for consistency.
  */
 export const DEFAULT_SETTINGS: FirewallSettings = {
   firewallEnabled: false,
   allowedHosts: [],
   blockedHosts: [],
-  requireUserApproval: true,
+  requireUserApproval: false,
 };
 
 const SETTINGS_STORAGE_KEY = 'playwright-mcp-firewall-settings';

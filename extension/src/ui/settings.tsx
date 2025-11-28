@@ -271,7 +271,7 @@ const SettingsApp: React.FC = () => {
         {/* Documentation Link */}
         <div className='settings-footer'>
           <a
-            href='https://github.com/microsoft/playwright-mcp/blob/main/extension/README.md'
+            href='https://github.com/microsoft/playwright-mcp/tree/main/extension#firewall-settings'
             target='_blank'
             rel='noopener noreferrer'
             className='docs-link'
