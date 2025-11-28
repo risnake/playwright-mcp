@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import { getSettings, isUrlAllowed, getHostname, type FirewallSettings } from './settingsStorage';
+
 export function debugLog(...args: unknown[]): void {
   const enabled = true;
   if (enabled) {
@@ -44,6 +46,7 @@ export class RelayConnection {
   private _tabPromise: Promise<void>;
   private _tabPromiseResolve!: () => void;
   private _closed = false;
+  private _firewallSettings: FirewallSettings | null = null;
 
   onclose?: () => void;
 
@@ -58,6 +61,17 @@ export class RelayConnection {
     this._detachListener = this._onDebuggerDetach.bind(this);
     chrome.debugger.onEvent.addListener(this._eventListener);
     chrome.debugger.onDetach.addListener(this._detachListener);
+    // Load firewall settings
+    void this._loadFirewallSettings();
+  }
+
+  private async _loadFirewallSettings(): Promise<void> {
+    try {
+      this._firewallSettings = await getSettings();
+      debugLog('Loaded firewall settings:', this._firewallSettings);
+    } catch (error) {
+      debugLog('Failed to load firewall settings:', error);
+    }
   }
 
   // Either setTabId or close is called after creating the connection.
@@ -134,6 +148,23 @@ export class RelayConnection {
     this._sendMessage(response);
   }
 
+  /**
+   * Checks if a navigation URL is allowed by the firewall settings.
+   * Returns { allowed: true } if allowed, or { allowed: false, reason: string } if blocked.
+   */
+  private _checkFirewallForNavigation(url: string): { allowed: boolean; reason?: string } {
+    // Reload settings to get latest changes
+    if (!this._firewallSettings) {
+      return { allowed: true };
+    }
+
+    const result = isUrlAllowed(url, this._firewallSettings);
+    if (!result.allowed) {
+      debugLog(`Firewall blocked navigation to ${getHostname(url)}: ${result.reason}`);
+    }
+    return result;
+  }
+
   private async _handleCommand(message: ProtocolCommand): Promise<any> {
     if (message.method === 'attachToTab') {
       await this._tabPromise;
@@ -149,6 +180,17 @@ export class RelayConnection {
     if (message.method === 'forwardCDPCommand') {
       const { sessionId, method, params } = message.params;
       debugLog('CDP command:', method, params);
+
+      // Check firewall for navigation commands
+      if (method === 'Page.navigate' && params?.url) {
+        // Refresh firewall settings for each navigation check
+        await this._loadFirewallSettings();
+        const firewallCheck = this._checkFirewallForNavigation(params.url);
+        if (!firewallCheck.allowed) {
+          throw new Error(`Navigation blocked by firewall: ${firewallCheck.reason}. Configure allowed hosts in the extension settings.`);
+        }
+      }
+
       const debuggerSession: chrome.debugger.DebuggerSession = {
         ...this._debuggee,
         sessionId,
