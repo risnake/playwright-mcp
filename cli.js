@@ -15,6 +15,27 @@
  * limitations under the License.
  */
 
+const path = require('path');
+const { filterMcpResponse } = require('./lib/snapshotFilter');
+
+// Patch the BrowserServerBackend prototype BEFORE loading program.js
+// This filters unnecessary items from aria snapshots to reduce AI context size.
+// Removes: [cursor=pointer], /url: lines, /placeholder: lines
+// Preserves: [ref=...], role names, element text content, [level=...], [active]
+const playwrightDir = path.dirname(require.resolve('playwright/package.json'));
+const backendPath = path.join(playwrightDir, 'lib', 'mcp', 'browser', 'browserServerBackend.js');
+const backendModule = require(backendPath);
+const BrowserServerBackend = backendModule.BrowserServerBackend;
+
+if (BrowserServerBackend && BrowserServerBackend.prototype && BrowserServerBackend.prototype.callTool) {
+  const originalCallTool = BrowserServerBackend.prototype.callTool;
+  BrowserServerBackend.prototype.callTool = async function(toolName, args, progress) {
+    const result = await originalCallTool.call(this, toolName, args, progress);
+    return filterMcpResponse(result);
+  };
+}
+
+// Now load the program
 const { program } = require('playwright-core/lib/utilsBundle');
 const { decorateCommand } = require('playwright/lib/mcp/program');
 
