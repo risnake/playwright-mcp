@@ -439,6 +439,84 @@ This is useful for overriding browser APIs or setting up the environment.
 window.isPlaywrightMCP = true;
 ```
 
+### Ghost Cursor (Visual AI Agent Presence)
+
+The Ghost Cursor feature transforms the Playwright MCP server into a **visual "Ghost Browser"** that displays AI agent actions as if a second person is controlling the browser in real-time. This is useful for:
+
+- **Trust**: Users see exactly what the AI agent is doing
+- **Debugging**: Developers can visually trace agent behavior  
+- **Demo-Friendly**: Perfect for presentations and recordings
+- **Education**: Shows AI decision-making process in real-time
+
+#### Quick Start
+
+Enable the ghost cursor by adding the init scripts:
+
+```js
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest",
+        "--init-script=node_modules/@playwright/mcp/lib/ghost-cursor.js",
+        "--init-page=node_modules/@playwright/mcp/lib/ghost-cursor-page.ts"
+      ]
+    }
+  }
+}
+```
+
+#### Features
+
+- **Custom animated cursor**: A distinct red arrow cursor appears on every page
+- **Smooth animation**: Cursor smoothly animates from its current position to the target element (default 500ms)
+- **Hover effect**: Cursor hovers briefly over elements before actions execute
+- **Click animation**: Visual feedback when clicking
+- **Navigation persistence**: Cursor survives page navigations and dynamically-loaded content
+- **Non-interactive**: Uses `pointer-events: none` to avoid interfering with real interactions
+
+#### Configuration
+
+You can customize the ghost cursor by setting `window.__ghostCursorConfig` before the init script loads, or via URL parameters:
+
+```js
+// In a custom init script loaded before ghost-cursor.js
+window.__ghostCursorConfig = {
+  enabled: true,      // Enable/disable ghost cursor
+  speed: 500,         // Animation duration in milliseconds
+  color: '#ff4444',   // Cursor color (hex)
+  style: 'arrow'      // Cursor style: 'arrow', 'hand', or 'dot'
+};
+```
+
+Or via URL parameters for testing:
+```
+?__ghostCursorSpeed=500&__ghostCursorColor=%23ff4444&__ghostCursorStyle=arrow
+```
+
+#### Programmatic Control
+
+The ghost cursor exposes an API on `window.__ghostCursor`:
+
+```js
+// Move cursor to position
+window.__ghostCursor.moveTo(x, y, callback);
+
+// Trigger click animation
+window.__ghostCursor.click();
+
+// Show/hide cursor
+window.__ghostCursor.show();
+window.__ghostCursor.hide();
+
+// Get current position
+const { x, y } = window.__ghostCursor.getPosition();
+
+// Update configuration at runtime
+window.__ghostCursor.updateConfig({ speed: 300, color: '#00ff00' });
+```
+
 ### Configuration file
 
 The Playwright MCP server can be configured using a JSON configuration file. You can specify the configuration file

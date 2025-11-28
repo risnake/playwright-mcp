@@ -2,5 +2,7 @@
 README.md
 LICENSE
 !cli.js
+!ghost-cli.js
 !index.*
 !config.d.ts
+!lib/
