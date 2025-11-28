@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Button, TabItem  } from './tabItem';
 
@@ -73,6 +73,10 @@ const StatusApp: React.FC = () => {
     window.close();
   };
 
+  const openSettings = useCallback(() => {
+    chrome.tabs.create({ url: chrome.runtime.getURL('settings.html') });
+  }, []);
+
   return (
     <div className='app-container'>
       <div className='content-wrapper'>
@@ -99,6 +103,11 @@ const StatusApp: React.FC = () => {
           </div>
         )}
         <AuthTokenSection />
+        <div className='settings-link-section'>
+          <button className='settings-link' onClick={openSettings}>
+            ⚙️ Open Firewall Settings
+          </button>
+        </div>
       </div>
     </div>
   );

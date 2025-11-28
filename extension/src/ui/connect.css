@@ -260,3 +260,41 @@ body {
 .auth-token-refresh:not(:disabled):hover {
   background-color: var(--color-btn-selected-bg);
 }
+
+/* Settings link section */
+.settings-link-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #d0d7de;
+  text-align: center;
+}
+
+.settings-link {
+  background: none;
+  border: none;
+  color: #0969da;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.settings-link:hover {
+  background-color: rgba(9, 105, 218, 0.1);
+  text-decoration: underline;
+}
+
+@media (prefers-color-scheme: dark) {
+  .settings-link-section {
+    border-top-color: #30363d;
+  }
+
+  .settings-link {
+    color: #58a6ff;
+  }
+
+  .settings-link:hover {
+    background-color: rgba(56, 139, 253, 0.15);
+  }
+}

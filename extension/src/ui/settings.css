@@ -1,0 +1,345 @@
+/*
+  Copyright (c) Microsoft Corporation.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
+/* Settings Page Specific Styles */
+
+.settings-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2328;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #d0d7de;
+}
+
+.settings-section {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #f6f8fa;
+  border-radius: 8px;
+  border: 1px solid #d0d7de;
+}
+
+.settings-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2328;
+  margin-bottom: 8px;
+}
+
+.settings-description {
+  font-size: 14px;
+  color: #656d76;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+/* Toggle Switches */
+.settings-toggle {
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #d0d7de;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.toggle-checkbox {
+  width: 18px;
+  height: 18px;
+  margin-right: 12px;
+  cursor: pointer;
+  accent-color: #2da44e;
+}
+
+.toggle-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f2328;
+}
+
+.toggle-description {
+  font-size: 12px;
+  color: #656d76;
+  margin-top: 8px;
+  margin-left: 30px;
+  line-height: 1.4;
+}
+
+/* Host Lists */
+.host-list-section {
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #d0d7de;
+}
+
+.host-list-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2328;
+  margin-bottom: 4px;
+}
+
+.host-list-description {
+  font-size: 12px;
+  color: #656d76;
+  margin-bottom: 12px;
+}
+
+.host-input-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.host-input {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #1f2328;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.host-input:focus {
+  border-color: #0969da;
+  box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.15);
+}
+
+.host-input::placeholder {
+  color: #8c959f;
+}
+
+.host-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.host-list-empty {
+  font-size: 12px;
+  color: #8c959f;
+  font-style: italic;
+  padding: 8px 0;
+}
+
+.host-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: #dafbe1;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.host-item.blocked {
+  background-color: #ffebe9;
+}
+
+.host-name {
+  font-size: 13px;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  color: #1f2328;
+}
+
+.host-remove-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: #656d76;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.host-remove-btn:hover {
+  background-color: rgba(208, 215, 222, 0.5);
+  color: #cf222e;
+}
+
+/* Save Status */
+.save-status {
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.save-status.saving {
+  background-color: #ddf4ff;
+  color: #0969da;
+}
+
+.save-status.saved {
+  background-color: #dafbe1;
+  color: #1a7f37;
+}
+
+.save-status.error {
+  background-color: #ffebe9;
+  color: #cf222e;
+}
+
+/* Reset Section */
+.reset-section {
+  display: flex;
+  justify-content: flex-end;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* Footer */
+.settings-footer {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #d0d7de;
+  text-align: center;
+}
+
+.docs-link {
+  color: #0969da;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.docs-link:hover {
+  text-decoration: underline;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .settings-title {
+    color: #c9d1d9;
+    border-bottom-color: #30363d;
+  }
+
+  .settings-section {
+    background-color: #161b22;
+    border-color: #30363d;
+  }
+
+  .settings-section-title {
+    color: #c9d1d9;
+  }
+
+  .settings-description {
+    color: #8b949e;
+  }
+
+  .settings-toggle {
+    background-color: #0d1117;
+    border-color: #30363d;
+  }
+
+  .toggle-text {
+    color: #c9d1d9;
+  }
+
+  .toggle-description {
+    color: #8b949e;
+  }
+
+  .host-list-section {
+    background-color: #0d1117;
+    border-color: #30363d;
+  }
+
+  .host-list-title {
+    color: #c9d1d9;
+  }
+
+  .host-list-description {
+    color: #8b949e;
+  }
+
+  .host-input {
+    background-color: #0d1117;
+    border-color: #30363d;
+    color: #c9d1d9;
+  }
+
+  .host-input:focus {
+    border-color: #58a6ff;
+    box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.15);
+  }
+
+  .host-input::placeholder {
+    color: #484f58;
+  }
+
+  .host-list-empty {
+    color: #484f58;
+  }
+
+  .host-item {
+    background-color: rgba(46, 160, 67, 0.15);
+  }
+
+  .host-item.blocked {
+    background-color: rgba(248, 81, 73, 0.15);
+  }
+
+  .host-name {
+    color: #c9d1d9;
+  }
+
+  .host-remove-btn {
+    color: #8b949e;
+  }
+
+  .host-remove-btn:hover {
+    background-color: rgba(110, 118, 129, 0.2);
+    color: #f85149;
+  }
+
+  .save-status.saving {
+    background-color: rgba(56, 139, 253, 0.15);
+    color: #58a6ff;
+  }
+
+  .save-status.saved {
+    background-color: rgba(46, 160, 67, 0.15);
+    color: #3fb950;
+  }
+
+  .save-status.error {
+    background-color: rgba(248, 81, 73, 0.15);
+    color: #f85149;
+  }
+
+  .settings-footer {
+    border-top-color: #30363d;
+  }
+
+  .docs-link {
+    color: #58a6ff;
+  }
+}
