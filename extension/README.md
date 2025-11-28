@@ -28,7 +28,7 @@ The browser extension bridges this gap by allowing the Playwright MCP server to 
 Download the latest Chrome extension from GitHub:
 - **Download link**: https://github.com/microsoft/playwright-mcp/releases
 
-Look for the `playwright-mcp-extension-X.X.X.zip` file in the release assets. Extract it to a folder on your computer.
+Look for the `playwright-mcp-extension-{version}.zip` file (e.g., `playwright-mcp-extension-0.0.48.zip`) in the release assets. Extract it to a folder on your computer.
 
 ### Step 2: Load the Extension in Chrome/Edge
 
@@ -117,7 +117,7 @@ If you see "Extension connection timeout" errors:
 
 1. Make sure your browser is open and the extension is active
 2. Check that no firewall or security software is blocking local connections
-3. The extension uses WebSocket connections on localhost - ensure these aren't blocked
+3. The extension uses WebSocket connections on `localhost` - ensure these aren't blocked by your browser security settings or corporate proxy
 
 ### Sites Not Working Correctly
 
